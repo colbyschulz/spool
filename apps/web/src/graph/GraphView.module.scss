@@ -1,0 +1,7 @@
+@use "../styles/tokens" as *;
+
+.wrap {
+  position: absolute;
+  inset: 0;
+  background: $color-bg;
+}
