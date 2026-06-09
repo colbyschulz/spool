@@ -1,0 +1,12 @@
+@use "../styles/tokens" as *;
+
+.panel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 360px; z-index: $z-panel; overflow-y: auto;
+  background: $color-surface; border-left: 1px solid $color-border; padding: $space-3;
+}
+.header { display: flex; justify-content: space-between; align-items: flex-start; gap: $space-2; }
+.name { margin: 0; font-size: $font-size-lg; }
+.aff { margin: $space-1 0 $space-3; color: $color-text-muted; font-size: $font-size-sm; }
+.close { background: none; border: 0; color: $color-text-muted; font-size: 22px; cursor: pointer; }
+.loading { color: $color-text-muted; }
