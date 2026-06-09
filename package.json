@@ -1,0 +1,13 @@
+{
+  "name": "skein",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "build:shared": "npm run build -w @skein/shared",
+    "dev:server": "npm run dev -w @skein/server",
+    "dev:web": "npm run dev -w @skein/web",
+    "test": "npm run test --workspaces --if-present"
+  }
+}
