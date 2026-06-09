@@ -1,0 +1,23 @@
+{
+  "name": "@skein/server",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@skein/shared": "*",
+    "fastify": "^4.28.0",
+    "@fastify/cors": "^9.0.0",
+    "fast-xml-parser": "^4.4.0",
+    "lru-cache": "^11.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}
