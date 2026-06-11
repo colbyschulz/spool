@@ -1,11 +1,68 @@
+/* ============================================================
+   SKEIN DESIGN SYSTEM — CSS custom properties.
+   Mirrors src/styles/_tokens.scss; consumed by inline styles
+   and the canvas graph renderer.
+   ============================================================ */
 :root {
-  --color-bg: #0f1419;
-  --color-surface: #1b232c;
-  --color-border: #2b3640;
-  --color-text: #e6edf3;
-  --color-text-muted: #9aa7b2;
-  --color-accent: #4aa3ff;
-  --color-node: #4aa3ff;
-  --color-node-seed: #ffb347;
-  --color-edge: #3a4754;
+  /* Warm neutrals (sand) */
+  --color-sand-50: #fdfaf5;
+  --color-sand-100: #f5f0e8;
+  --color-sand-200: #ede8dc;
+  --color-sand-300: #e0d9ce;
+  --color-sand-400: #c8bfb0;
+  --color-sand-500: #9b8e7e;
+  --color-sand-600: #6e6257;
+  --color-sand-700: #4a4038;
+  --color-sand-800: #2e271f;
+  --color-sand-900: #1e1a14;
+
+  /* Terracotta — primary accent */
+  --color-terra-100: #f5e4d8;
+  --color-terra-200: #e8c4a8;
+  --color-terra-300: #d9997a;
+  --color-terra-400: #cc7750;
+  --color-terra-500: #c4622d;
+  --color-terra-600: #a64e22;
+  --color-terra-700: #833c19;
+  --color-terra-800: #5e2b11;
+
+  /* Olive — secondary accent */
+  --color-olive-100: #ebefd4;
+  --color-olive-500: #5c6633;
+  --color-olive-600: #475228;
+
+  /* Functional */
+  --color-error: #b83232;
+  --color-success: #3a7a4a;
+
+  /* Semantic */
+  --bg-base: var(--color-sand-100);
+  --bg-surface: var(--color-sand-50);
+  --bg-subtle: var(--color-sand-200);
+
+  --fg-primary: var(--color-sand-900);
+  --fg-secondary: var(--color-sand-600);
+  --fg-tertiary: var(--color-sand-500);
+  --fg-inverse: var(--color-sand-50);
+
+  --border-subtle: var(--color-sand-300);
+  --border-default: var(--color-sand-400);
+  --border-strong: var(--color-sand-600);
+
+  --accent: var(--color-terra-500);
+  --accent-hover: var(--color-terra-600);
+  --accent-subtle: var(--color-terra-100);
+  --accent-2: var(--color-olive-500);
+  --accent-2-subtle: var(--color-olive-100);
+
+  /* Typography */
+  --font-display: "Syne", sans-serif;
+  --font-body: "Roboto", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", "Courier New", monospace;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 3px rgba(30, 26, 20, 0.06);
+  --shadow-sm: 0 2px 8px rgba(30, 26, 20, 0.08);
+  --shadow-md: 0 4px 16px rgba(30, 26, 20, 0.1);
+  --shadow-lg: 0 8px 32px rgba(30, 26, 20, 0.12);
 }

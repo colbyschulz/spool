@@ -1,0 +1,155 @@
+@use "../styles/tokens" as *;
+
+.header {
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid $color-border;
+}
+
+.identity {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  margin: 12px 0 14px;
+}
+
+.identityBody { min-width: 0; }
+
+.name {
+  margin: 0;
+  font-family: $font-display;
+  font-size: $text-md;
+  font-weight: 700;
+  letter-spacing: $tracking-snug;
+  color: $color-text;
+  line-height: $leading-tight;
+}
+
+.aff,
+.cardAff {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: $font-body;
+  font-size: 12.5px;
+  color: $color-text-2;
+  margin-top: 3px;
+  min-width: 0;
+}
+
+.affIcon { color: $color-text-3; flex-shrink: 0; }
+
+.stats {
+  display: flex;
+  gap: $space-2;
+}
+
+.list {
+  padding: 16px 22px 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.hint {
+  font-family: $font-body;
+  font-size: 12.5px;
+  color: $color-text-3;
+  margin: 4px 0 14px;
+  line-height: 1.45;
+}
+
+.status,
+.statusError {
+  font-family: $font-body;
+  font-size: 13px;
+  margin: $space-2 0;
+}
+.status { color: $color-text-3; }
+.statusError { color: $color-error; }
+
+.card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 13px 15px;
+  margin-bottom: 9px;
+  transition: background 150ms, border-color 150ms;
+
+  &:hover {
+    background: $color-subtle;
+    .cardTitle { color: $color-accent-hover; }
+    .coAuthors { color: $color-accent; }
+  }
+}
+
+.cardSelected {
+  background: $color-accent-subtle;
+  border-color: $color-accent;
+
+  .cardTitle { color: $color-accent-hover; }
+  .coAuthors { color: $color-accent; }
+}
+
+.cardTitle {
+  font-family: $font-body;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: $color-text;
+  line-height: 1.32;
+  text-wrap: pretty;
+  margin-bottom: 5px;
+}
+
+.cardAuthors {
+  font-family: $font-body;
+  font-size: 12.5px;
+  color: $color-text-2;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.cardMeta {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $color-text-2;
+  margin-bottom: 6px;
+}
+
+.journal { font-style: italic; }
+
+.cardAff { margin-bottom: 9px; }
+
+.cardAffText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $color-text-3;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding-top: 9px;
+  border-top: 1px solid $color-border;
+}
+
+.pmid {
+  font-family: $font-mono;
+  font-size: 11.5px;
+  color: $color-text-3;
+}
+
+.coAuthors {
+  margin-left: auto;
+  font-family: $font-body;
+  font-size: 12px;
+  font-weight: 500;
+  color: $color-text-2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}

@@ -1,9 +1,0 @@
-@use "../styles/tokens" as *;
-
-.filters { display: flex; gap: $space-3; padding: 0 $space-3 $space-3; flex-wrap: wrap; }
-.field { display: flex; flex-direction: column; gap: $space-1; font-size: $font-size-sm; color: $color-text-muted; }
-.num {
-  width: 90px; padding: $space-1 $space-2;
-  background: $color-surface; color: $color-text;
-  border: 1px solid $color-border; border-radius: $radius-1;
-}

@@ -1,7 +1,22 @@
 @use "./styles/tokens" as *;
 
-.app { display: grid; grid-template-columns: 320px 1fr; height: 100%; }
-.sidebar { border-right: 1px solid $color-border; overflow-y: auto; }
-.canvas { position: relative; }
-.status { padding: $space-2 $space-3; color: $color-text-muted; font-size: $font-size-sm; }
-.error { padding: $space-2 $space-3; color: #f87171; font-size: $font-size-sm; }
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg;
+  overflow: hidden;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.canvas {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+  background: $color-subtle;
+}
