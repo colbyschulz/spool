@@ -1,11 +1,11 @@
-# skein — Design
+# spool — Design
 
 **Date:** 2026-06-09
 **Status:** Approved (pre-implementation)
 
 ## 1. Purpose
 
-skein is a visual explorer for scholarly collaboration networks built on PubMed.
+spool is a visual explorer for scholarly collaboration networks built on PubMed.
 A user searches an author, disambiguates to the correct person, then explores their
 collaboration network by expanding co-authors paper-by-paper in an interactive
 force-directed graph.
@@ -28,7 +28,7 @@ surfaced contextually in the side panel, not rendered as graph nodes.
 A monorepo using npm workspaces, TypeScript throughout.
 
 ```
-skein/
+spool/
 ├── apps/
 │   ├── web/      # Vite + React + TS  (UI, graph, TanStack Query)
 │   └── server/   # Fastify + TS       (PubMed proxy + in-memory cache)

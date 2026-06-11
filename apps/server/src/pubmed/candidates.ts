@@ -1,4 +1,4 @@
-import type { AuthorCandidate, Publication } from "@skein/shared";
+import type { AuthorCandidate, Publication } from "@spool/shared";
 
 const UNKNOWN = "Unknown affiliation";
 

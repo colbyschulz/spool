@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { App } from "./App.js";
+import { App } from "./app.js";
 
 describe("App", () => {
   it("renders the search bar", () => {

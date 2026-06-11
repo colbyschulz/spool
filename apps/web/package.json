@@ -1,5 +1,5 @@
 {
-  "name": "@skein/web",
+  "name": "@spool/web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@skein/shared": "*",
+    "@spool/shared": "*",
     "@tanstack/react-query": "^5.50.0",
     "lucide-react": "^1.17.0",
     "react": "^19.2.6",

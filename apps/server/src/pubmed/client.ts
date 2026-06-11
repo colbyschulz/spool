@@ -1,5 +1,5 @@
 import { LRUCache } from "lru-cache";
-import type { Publication } from "@skein/shared";
+import type { Publication } from "@spool/shared";
 import { esearchUrl, efetchUrl } from "./eutils.js";
 import { parsePublications } from "./parse.js";
 

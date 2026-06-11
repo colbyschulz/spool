@@ -1,0 +1,13 @@
+{
+  "name": "@spool/shared",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": { ".": "./index.ts" },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

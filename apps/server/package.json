@@ -1,5 +1,5 @@
 {
-  "name": "@skein/server",
+  "name": "@spool/server",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@skein/shared": "*",
+    "@spool/shared": "*",
     "fastify": "^4.28.0",
     "@fastify/cors": "^9.0.0",
     "fast-xml-parser": "^4.4.0",

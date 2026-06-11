@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { authorId, type Author } from "@skein/shared";
+import { authorId, type Author } from "@spool/shared";
 
 /** One author on the collaboration path, plus the paper that led to them. */
 export interface PathStep {

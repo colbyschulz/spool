@@ -15,18 +15,10 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: $space-2 + 2px;
   background: none;
   border: none;
   cursor: pointer;
-}
-
-.wordmark {
-  font-family: $font-display;
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: $tracking-tight;
-  color: $color-text;
+  padding: 0;
 }
 
 .searchWrap {

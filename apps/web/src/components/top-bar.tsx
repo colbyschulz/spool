@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { Search, Spline } from "lucide-react";
-import type { AuthorCandidate } from "@skein/shared";
+import type { AuthorCandidate } from "@spool/shared";
 import { useAuthorSearch } from "../api/hooks.js";
-import { useDebouncedValue } from "../lib/useDebouncedValue.js";
-import { Avatar } from "./Avatar.js";
-import { ThreadMark } from "./ThreadMark.js";
-import styles from "./TopBar.module.scss";
+import { useDebouncedValue } from "../lib/use-debounced-value.js";
+import { Avatar } from "./avatar.js";
+import { Logo } from "./logo.js";
+import styles from "./top-bar.module.scss";
 
 interface Props {
   onHome: () => void;
@@ -33,8 +33,7 @@ export function TopBar({ onHome, onJump, pathLen }: Props) {
   return (
     <header className={styles.bar}>
       <button className={styles.brand} onClick={onHome}>
-        <ThreadMark size={24} />
-        <span className={styles.wordmark}>Skein</span>
+        <Logo variant="lockup" size={24} />
       </button>
 
       <div className={styles.searchWrap}>

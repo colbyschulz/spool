@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { RotateCcw } from "lucide-react";
-import { authorId } from "@skein/shared";
-import type { PathStep } from "../graph/useExplorer.js";
-import { Avatar } from "./Avatar.js";
-import { ThreadMark } from "./ThreadMark.js";
-import styles from "./ThreadBar.module.scss";
+import { authorId } from "@spool/shared";
+import type { PathStep } from "../graph/use-explorer.js";
+import { Avatar } from "./avatar.js";
+import { Logo } from "./logo.js";
+import styles from "./thread-bar.module.scss";
 
 interface Props {
   path: PathStep[];
@@ -23,7 +23,7 @@ export function ThreadBar({ path, frontierId, onSelectAuthor, onClear }: Props) 
   return (
     <div className={styles.bar}>
       <div className={styles.label}>
-        <ThreadMark size={20} />
+        <Logo variant="mark" size={18} />
         <span className={styles.labelText}>Path</span>
       </div>
 

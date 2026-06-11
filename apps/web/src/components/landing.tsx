@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import type { AuthorCandidate } from "@skein/shared";
+import type { AuthorCandidate } from "@spool/shared";
 import { useAuthorSearch } from "../api/hooks.js";
-import { useDebouncedValue } from "../lib/useDebouncedValue.js";
-import { Avatar } from "./Avatar.js";
-import { ThreadMark } from "./ThreadMark.js";
-import styles from "./Landing.module.scss";
+import { useDebouncedValue } from "../lib/use-debounced-value.js";
+import { Avatar } from "./avatar.js";
+import { Logo } from "./logo.js";
+import styles from "./landing.module.scss";
 
 interface Props {
   onPick: (candidate: AuthorCandidate) => void;
@@ -31,9 +31,8 @@ export function Landing({ onPick }: Props) {
     <div className={styles.wrap}>
       <div className={styles.inner}>
         <div className={styles.header}>
-          <ThreadMark size={26} />
-          <span className={styles.wordmark}>Skein</span>
-          <span className={styles.kicker}>Co-authorship network explorer</span>
+          <Logo variant="lockup" size={28} />
+          <span className={styles.kicker}>Pubmed network explorer</span>
         </div>
         <p className={styles.lede}>
           Look up an author to read their publications, then follow shared papers to trace

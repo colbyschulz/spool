@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ForceGraph2D from "react-force-graph-2d";
 import { Plus, Minus, Maximize } from "lucide-react";
 import { initials, lastName } from "../lib/author.js";
-import styles from "./GraphView.module.scss";
+import styles from "./graph-view.module.scss";
 
 export type NodeRole = "frontier" | "path" | "candidate";
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildCandidates } from "../src/pubmed/candidates.js";
-import type { Publication } from "@skein/shared";
+import type { Publication } from "@spool/shared";
 
 function pub(pmid: string, authors: { name: string; affiliation?: string }[]): Publication {
   return { pmid, title: `T${pmid}`, journal: "J", year: 2020, authors, pubmedUrl: `u/${pmid}` };

@@ -1,4 +1,4 @@
-import type { AuthorCandidate, Publication } from "@skein/shared";
+import type { AuthorCandidate, Publication } from "@spool/shared";
 
 async function getJson<T>(url: string): Promise<T> {
   const res = await fetch(url);

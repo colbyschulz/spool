@@ -1,5 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
-import type { Author, Publication } from "@skein/shared";
+import type { Author, Publication } from "@spool/shared";
 
 const parser = new XMLParser({
   ignoreAttributes: false,

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import styles from "./Panel.module.scss";
+import styles from "./panel.module.scss";
 
 /** The fixed-width left detail panel shell. */
 export function Aside({ children }: { children: ReactNode }) {

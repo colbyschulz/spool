@@ -1,9 +1,9 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { authorId, type Author, type Publication } from "@skein/shared";
+import { authorId, type Author, type Publication } from "@spool/shared";
 import { lastName } from "../lib/author.js";
-import { Avatar } from "./Avatar.js";
-import { Aside, SectionLabel } from "./Panel.js";
-import styles from "./CoauthorsPanel.module.scss";
+import { Avatar } from "./avatar.js";
+import { Aside, SectionLabel } from "./panel.js";
+import styles from "./coauthors-panel.module.scss";
 
 interface Props {
   paper: Publication;

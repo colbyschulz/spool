@@ -1,14 +1,14 @@
 import { useCallback, useMemo, useState } from "react";
-import { authorId, type Author, type AuthorCandidate } from "@skein/shared";
-import { Landing } from "./components/Landing.js";
-import { TopBar } from "./components/TopBar.js";
-import { ThreadBar } from "./components/ThreadBar.js";
-import { PubsPanel } from "./components/PubsPanel.js";
-import { CoauthorsPanel } from "./components/CoauthorsPanel.js";
-import { GraphView, type GraphNodeView, type GraphLinkView } from "./graph/GraphView.js";
-import { useExplorer } from "./graph/useExplorer.js";
+import { authorId, type Author, type AuthorCandidate } from "@spool/shared";
+import { Landing } from "./components/landing.js";
+import { TopBar } from "./components/top-bar.js";
+import { ThreadBar } from "./components/thread-bar.js";
+import { PubsPanel } from "./components/pubs-panel.js";
+import { CoauthorsPanel } from "./components/coauthors-panel.js";
+import { GraphView, type GraphNodeView, type GraphLinkView } from "./graph/graph-view.js";
+import { useExplorer } from "./graph/use-explorer.js";
 import { useAuthorPublications } from "./api/hooks.js";
-import styles from "./App.module.scss";
+import styles from "./app.module.scss";
 
 export function App() {
   const [phase, setPhase] = useState<"landing" | "explorer">("landing");

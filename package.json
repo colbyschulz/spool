@@ -1,13 +1,13 @@
 {
-  "name": "skein",
+  "name": "spool",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "workspaces": ["packages/*", "apps/*"],
+  "workspaces": ["shared", "apps/*"],
   "scripts": {
-    "build:shared": "npm run build -w @skein/shared",
-    "dev:server": "npm run dev -w @skein/server",
-    "dev:web": "npm run dev -w @skein/web",
+    "build": "npm run build -w @spool/server && npm run build -w @spool/web",
+    "dev:server": "npm run dev -w @spool/server",
+    "dev:web": "npm run dev -w @spool/web",
     "test": "npm run test --workspaces --if-present"
   }
 }

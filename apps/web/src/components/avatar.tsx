@@ -1,5 +1,5 @@
 import { initials } from "../lib/author.js";
-import styles from "./Avatar.module.scss";
+import styles from "./avatar.module.scss";
 
 interface Props {
   name: string;

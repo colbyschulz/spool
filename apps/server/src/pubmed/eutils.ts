@@ -1,7 +1,7 @@
 const BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 
 function withKey(url: URL): URL {
-  const key = process.env.SKEIN_NCBI_API_KEY;
+  const key = process.env.SPOOL_NCBI_API_KEY;
   if (key) url.searchParams.set("api_key", key);
   return url;
 }

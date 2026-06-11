@@ -19,10 +19,10 @@ describe("eutils URL builders", () => {
     expect(u.searchParams.get("retmode")).toBe("xml");
   });
 
-  it("includes api_key when SKEIN_NCBI_API_KEY is set", () => {
-    process.env.SKEIN_NCBI_API_KEY = "abc123";
+  it("includes api_key when SPOOL_NCBI_API_KEY is set", () => {
+    process.env.SPOOL_NCBI_API_KEY = "abc123";
     const u = new URL(esearchUrl("Smith J", 10));
     expect(u.searchParams.get("api_key")).toBe("abc123");
-    delete process.env.SKEIN_NCBI_API_KEY;
+    delete process.env.SPOOL_NCBI_API_KEY;
   });
 });

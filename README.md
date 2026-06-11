@@ -1,2 +1,2 @@
-# skein
+# spool
 Scholarly networking visualization

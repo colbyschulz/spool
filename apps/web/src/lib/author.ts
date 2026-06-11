@@ -1,4 +1,4 @@
-import type { Author } from "@skein/shared";
+import type { Author } from "@spool/shared";
 
 /**
  * Derive up-to-two-letter initials from a PubMed-style name.

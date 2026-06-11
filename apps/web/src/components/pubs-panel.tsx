@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { Building2, ArrowRight } from "lucide-react";
-import { authorId, type Author, type Publication } from "@skein/shared";
+import { authorId, type Author, type Publication } from "@spool/shared";
 import { authorLine } from "../lib/author.js";
-import { Avatar } from "./Avatar.js";
-import { Aside, SectionLabel, Stat } from "./Panel.js";
-import styles from "./PubsPanel.module.scss";
+import { Avatar } from "./avatar.js";
+import { Aside, SectionLabel, Stat } from "./panel.js";
+import styles from "./pubs-panel.module.scss";
 
 interface Props {
   author: Author;
