@@ -1,0 +1,127 @@
+@use "../styles/tokens" as *;
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  height: 72px;
+  flex-shrink: 0;
+  padding: 0 20px;
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-shrink: 0;
+}
+
+.labelText {
+  font-family: $font-body;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: $tracking-wide + 0.01em;
+  color: $color-text-3;
+}
+
+.scroller {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  height: 100%;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 20px,
+    #000 calc(100% - 20px),
+    transparent 100%
+  );
+
+  &::-webkit-scrollbar { height: 0; }
+}
+
+.segment {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.via {
+  flex-shrink: 0;
+  max-width: 210px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 0 $space-1;
+}
+
+.viaTitle {
+  font-family: $font-body;
+  font-size: 11.5px;
+  font-style: italic;
+  color: $color-text-2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.viaMeta {
+  font-family: $font-mono;
+  font-size: 10px;
+  color: $color-text-3;
+  white-space: nowrap;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-shrink: 0;
+  background: $color-bg;
+  border: 1.5px solid $color-border-strong;
+  border-radius: $radius-pill;
+  padding: 5px 14px 5px 6px;
+  cursor: pointer;
+}
+
+.chipActive {
+  background: $color-accent;
+  border-color: $color-accent;
+  box-shadow: $shadow-sm;
+}
+
+.chipName {
+  font-family: $font-body;
+  font-size: $text-sm;
+  font-weight: 600;
+  color: $color-text;
+  white-space: nowrap;
+
+  .chipActive & { color: $color-inverse; }
+}
+
+.reset {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-family: $font-body;
+  font-size: 13px;
+  color: $color-text-2;
+
+  &:hover { border-color: $color-border-strong; color: $color-text; }
+}

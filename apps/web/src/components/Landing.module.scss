@@ -1,0 +1,171 @@
+@use "../styles/tokens" as *;
+
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg;
+  padding: $space-6;
+}
+
+.inner {
+  width: 100%;
+  max-width: 600px;
+  margin-top: -40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 7px;
+}
+
+.wordmark {
+  font-family: $font-display;
+  font-size: $text-md + 4px;
+  font-weight: 800;
+  letter-spacing: $tracking-tight;
+  color: $color-text;
+}
+
+.kicker {
+  font-family: $font-body;
+  font-size: $text-sm;
+  color: $color-text-2;
+  border-left: 1px solid $color-border-strong;
+  padding-left: 11px;
+  white-space: nowrap;
+}
+
+.lede {
+  font-family: $font-body;
+  font-size: $text-sm;
+  color: $color-text-2;
+  line-height: $leading-normal;
+  margin: 0 0 22px;
+  max-width: 540px;
+}
+
+.searchArea { position: relative; }
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  background: $color-surface;
+  border: 1.5px solid $color-border-strong;
+  border-radius: 12px;
+  padding: 0 18px;
+  height: 60px;
+  box-shadow: $shadow-sm;
+  transition: border-color 150ms;
+}
+
+.searchBoxOpen {
+  border-color: $color-accent;
+  border-radius: 12px 12px 0 0;
+}
+
+.searchIcon { color: $color-text-3; flex-shrink: 0; }
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: $font-body;
+  font-size: 18px;
+  color: $color-text;
+}
+
+.kbd {
+  font-family: $font-body;
+  font-size: $text-xs;
+  color: $color-text-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  padding: 2px 7px;
+  background: $color-bg;
+}
+
+.results {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: $z-overlay;
+  background: $color-surface;
+  border: 1.5px solid $color-accent;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+}
+
+.status,
+.statusError {
+  padding: $space-3 18px;
+  font-family: $font-body;
+  font-size: $text-sm;
+}
+.status { color: $color-text-3; }
+.statusError { color: $color-error; }
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  width: 100%;
+  padding: $space-3 18px;
+  border: none;
+  border-bottom: 1px solid $color-border;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+
+  &:last-child { border-bottom: none; }
+}
+
+.resultActive { background: $color-accent-subtle; }
+
+.resultBody { flex: 1; min-width: 0; }
+
+.resultName {
+  display: block;
+  font-family: $font-body;
+  font-size: 15px;
+  font-weight: 500;
+  color: $color-text;
+}
+
+.resultAff {
+  display: block;
+  font-family: $font-body;
+  font-size: $text-sm - 1px;
+  color: $color-text-2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resultCount {
+  font-family: $font-body;
+  font-size: $text-xs;
+  color: $color-text-3;
+  white-space: nowrap;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-top: $space-12;
+  padding-top: $space-4;
+  border-top: 1px solid $color-border;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  color: $color-text-3;
+  letter-spacing: 0.01em;
+}

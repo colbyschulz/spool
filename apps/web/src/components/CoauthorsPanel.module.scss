@@ -1,0 +1,116 @@
+@use "../styles/tokens" as *;
+
+.header {
+  padding: 16px 22px;
+  border-bottom: 1px solid $color-border;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-2;
+  font-family: $font-body;
+  font-size: 13px;
+  padding: 0;
+  margin-bottom: 14px;
+  white-space: nowrap;
+
+  &:hover { color: $color-text; }
+}
+
+.title {
+  font-family: $font-body;
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-text;
+  line-height: $leading-snug;
+  text-wrap: pretty;
+  margin: 8px 0 7px;
+}
+
+.meta {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $color-text-2;
+}
+
+.journal { font-style: italic; }
+
+.list {
+  padding: 16px 22px 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.hint {
+  font-family: $font-body;
+  font-size: 12.5px;
+  color: $color-text-3;
+  margin: 4px 0 14px;
+  line-height: 1.45;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: 11px 12px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 150ms, background 150ms;
+
+  &:hover {
+    border-color: $color-accent;
+    background: $color-accent-subtle;
+  }
+}
+
+.itemBody { flex: 1; min-width: 0; }
+
+.itemName {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-text;
+}
+
+.onPath {
+  font-family: $font-body;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-accent;
+  background: $color-accent-subtle;
+  border-radius: $radius-sm;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.itemAff {
+  display: block;
+  font-family: $font-body;
+  font-size: 12px;
+  color: $color-text-2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemArrow { color: $color-text-3; flex-shrink: 0; }

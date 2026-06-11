@@ -1,12 +1,23 @@
 @use "./tokens" as *;
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
 html, body, #root { height: 100%; margin: 0; }
 
 body {
   background: $color-bg;
   color: $color-text;
-  font-family: $font-sans;
-  font-size: $font-size-md;
+  font-family: $font-body;
+  font-size: $text-base;
+  line-height: $leading-normal;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
+
+// Scrollbars — slim, warm
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: $color-border-strong; border-radius: $radius-pill; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+input::placeholder { color: $color-text-3; }
+button { font: inherit; }

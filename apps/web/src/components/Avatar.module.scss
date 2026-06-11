@@ -1,0 +1,13 @@
+@use "../styles/tokens" as *;
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: $radius-pill;
+  font-family: $font-display;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+}
