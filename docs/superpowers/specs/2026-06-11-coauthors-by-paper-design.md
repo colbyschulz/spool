@@ -87,11 +87,13 @@ Sort the frontier's publications newest-first (by year descending, the same orde
 ### Panel — `apps/web/src/components/pubs-panel.tsx` / `app.tsx`
 
 - Delete `coauthors-panel.tsx` and the `mode` branch in `app.tsx`.
-- `PubsPanel` is the always-on left panel: active-author identity + stats +
-  publications list (newest-first). Clicking a paper calls `highlightPaper(pmid)`;
-  if that paper is outside the current `shownPaperCount`, bump the count so its
-  cluster exists, then highlight and center it. A "Load more" affordance maps to
-  `loadMorePapers()`.
+- `PubsPanel` is the always-on left panel: active-author identity + stats + the
+  **currently shown** publications (the most-recent `shownPaperCount`, newest-first)
+  — panel rows always equal the graph's clusters. Clicking a paper calls
+  `highlightPaper(pmid)` to highlight and center its cluster (which always exists,
+  since rows == clusters). A "Load more" button — shown when the author has more
+  publications than `shownPaperCount` — calls `loadMorePapers()` to reveal the next
+  batch as both panel rows and graph clusters.
 
 ## Edge cases
 
