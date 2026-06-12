@@ -8,9 +8,10 @@ COPY apps/web/package.json apps/web/
 COPY apps/server/package.json apps/server/
 RUN npm ci
 
-# Copy source and build the frontend (server runs straight from source via tsx)
+# Copy source, type-check the whole monorepo, and build the frontend
+# (server runs straight from source via tsx)
 COPY . .
-RUN npm run build -w @spool/web
+RUN npm run typecheck && npm run build -w @spool/web
 
 ENV NODE_ENV=production PORT=8080
 EXPOSE 8080

@@ -1,88 +1,48 @@
 import { useCallback, useMemo, useState } from "react";
-import { authorId, type Author, type AuthorCandidate } from "@spool/shared";
+import type { AuthorCandidate, Publication } from "@spool/shared";
 import { Landing } from "./components/landing.js";
 import { TopBar } from "./components/top-bar.js";
 import { ThreadBar } from "./components/thread-bar.js";
 import { PubsPanel } from "./components/pubs-panel.js";
-import { CoauthorsPanel } from "./components/coauthors-panel.js";
-import { GraphView, type GraphNodeView, type GraphLinkView } from "./graph/graph-view.js";
+import { GraphView } from "./graph/graph-view.js";
+import { buildCoauthorGraph, byYearDesc } from "./graph/build-graph.js";
 import { useExplorer } from "./graph/use-explorer.js";
 import { useAuthorPublications } from "./api/hooks.js";
 import styles from "./app.module.scss";
+
+const EMPTY: Publication[] = [];
 
 export function App() {
   const [phase, setPhase] = useState<"landing" | "explorer">("landing");
   const {
     path,
-    mode,
-    selectedPmid,
+    shownPaperCount,
+    highlightedPmid,
     frontier,
     pathIds,
     startExplore,
-    selectPub,
-    backToPubs,
     selectCoauthor,
     rewindTo,
     clearPath,
+    loadMorePapers,
+    highlightPaper,
     reset,
   } = useExplorer();
 
   const pubs = useAuthorPublications(frontier?.name ?? null, frontier?.affiliation);
-  const publications = pubs.data ?? [];
-  const selectedPub = useMemo(
-    () => publications.find((p) => p.pmid === selectedPmid) ?? null,
-    [publications, selectedPmid],
+  const publications = pubs.data ?? EMPTY;
+
+  // Single newest-first sort shared by the panel and the graph derivation —
+  // buildCoauthorGraph requires pre-sorted input, so rows and clusters align.
+  const sorted = useMemo(() => [...publications].sort(byYearDesc), [publications]);
+
+  const graph = useMemo(
+    () => buildCoauthorGraph(path, sorted, shownPaperCount),
+    [path, sorted, shownPaperCount],
   );
 
-  const frontierId = frontier ? authorId(frontier) : null;
-
-  // Co-author candidates for the open paper: not the frontier, not already on the path.
-  const candidates = useMemo<Author[]>(() => {
-    if (mode !== "coauthors" || !selectedPub) return [];
-    const seen = new Set<string>();
-    const out: Author[] = [];
-    for (const a of selectedPub.authors) {
-      const id = authorId(a);
-      if (id === frontierId || pathIds.includes(id) || seen.has(id)) continue;
-      seen.add(id);
-      out.push(a);
-    }
-    return out;
-  }, [mode, selectedPub, frontierId, pathIds]);
-
-  const candidatesById = useMemo(() => {
-    const m = new Map<string, Author>();
-    for (const a of candidates) m.set(authorId(a), a);
-    return m;
-  }, [candidates]);
-
-  const graphNodes = useMemo<GraphNodeView[]>(() => {
-    const pathNodes = path.map((step) => {
-      const id = authorId(step.author);
-      return { id, name: step.author.name, role: id === frontierId ? "frontier" : "path" } as const;
-    });
-    const candNodes = candidates.map(
-      (a) => ({ id: authorId(a), name: a.name, role: "candidate" }) as const,
-    );
-    return [...pathNodes, ...candNodes];
-  }, [path, candidates, frontierId]);
-
-  // Title of the paper linking each consecutive path pair: segment i joins
-  // pathIds[i] → pathIds[i+1], established by path[i+1].viaTitle.
+  // Linking-paper title per consecutive path pair (path[i+1].viaTitle).
   const pathLabels = useMemo(() => path.slice(1).map((s) => s.viaTitle), [path]);
-
-  const graphLinks = useMemo<GraphLinkView[]>(() => {
-    const out: GraphLinkView[] = [];
-    for (let i = 0; i < pathIds.length - 1; i++) {
-      out.push({ source: pathIds[i]!, target: pathIds[i + 1]!, kind: "path" });
-    }
-    if (frontierId) {
-      for (const a of candidates) {
-        out.push({ source: frontierId, target: authorId(a), kind: "candidate" });
-      }
-    }
-    return out;
-  }, [pathIds, candidates, frontierId]);
 
   const onPick = useCallback(
     (c: AuthorCandidate) => {
@@ -94,16 +54,10 @@ export function App() {
 
   const onSelectCandidateNode = useCallback(
     (id: string) => {
-      const author = candidatesById.get(id);
-      if (!author || !selectedPub) return;
-      selectCoauthor(author, {
-        pmid: selectedPub.pmid,
-        title: selectedPub.title,
-        journal: selectedPub.journal,
-        year: selectedPub.year,
-      });
+      const hit = graph.candidates.get(id);
+      if (hit) selectCoauthor(hit.author, hit.via);
     },
-    [candidatesById, selectedPub, selectCoauthor],
+    [graph, selectCoauthor],
   );
 
   const onSelectPathNode = useCallback(
@@ -114,22 +68,11 @@ export function App() {
     [pathIds, rewindTo],
   );
 
-  const onCoauthorPick = useCallback(
-    (author: Author) => {
-      if (!selectedPub) return;
-      selectCoauthor(author, {
-        pmid: selectedPub.pmid,
-        title: selectedPub.title,
-        journal: selectedPub.journal,
-        year: selectedPub.year,
-      });
-    },
-    [selectedPub, selectCoauthor],
-  );
-
   if (phase === "landing" || !frontier) {
     return <Landing onPick={onPick} />;
   }
+
+  const frontierId = pathIds[pathIds.length - 1] ?? null;
 
   return (
     <div className={styles.app}>
@@ -148,33 +91,27 @@ export function App() {
         onClear={clearPath}
       />
       <div className={styles.body}>
-        {mode === "coauthors" && selectedPub ? (
-          <CoauthorsPanel
-            paper={selectedPub}
-            frontier={frontier}
-            pathIds={pathIds}
-            onSelectCoauthor={onCoauthorPick}
-            onBack={backToPubs}
-          />
-        ) : (
-          <PubsPanel
-            author={frontier}
-            publications={publications}
-            loading={pubs.isLoading}
-            error={pubs.isError}
-            selectedPmid={selectedPmid}
-            depth={path.length - 1}
-            onSelectPub={selectPub}
-          />
-        )}
+        <PubsPanel
+          author={frontier}
+          publications={sorted}
+          loading={pubs.isLoading}
+          error={pubs.isError}
+          highlightedPmid={highlightedPmid}
+          depth={path.length - 1}
+          shownCount={shownPaperCount}
+          onHighlightPaper={highlightPaper}
+          onLoadMore={loadMorePapers}
+        />
         <div className={styles.canvas}>
           <GraphView
-            nodes={graphNodes}
-            links={graphLinks}
+            nodes={graph.nodes}
+            links={graph.links}
             pathIds={pathIds}
             pathLabels={pathLabels}
-            mode={mode}
+            highlightedPmid={highlightedPmid}
             frontierName={frontier.name}
+            pubsLoading={pubs.isLoading}
+            pubsError={pubs.isError}
             onSelectCandidate={onSelectCandidateNode}
             onSelectPath={onSelectPathNode}
           />

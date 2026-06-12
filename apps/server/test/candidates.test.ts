@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildCandidates } from "../src/pubmed/candidates.js";
+import { buildCandidates, matchesQuery } from "../src/pubmed/candidates.js";
 import type { Publication } from "@spool/shared";
 
 function pub(pmid: string, authors: { name: string; affiliation?: string }[]): Publication {
@@ -18,13 +18,12 @@ describe("buildCandidates", () => {
     expect(candidates.length).toBe(2);
     const mit = candidates.find((c) => c.affiliation === "MIT")!;
     expect(mit.paperCount).toBe(2);
-    expect(mit.samplePublications.length).toBeLessThanOrEqual(3);
   });
 
-  it("buckets papers with no affiliation under 'Unknown affiliation'", () => {
+  it("buckets papers with no affiliation as affiliation: undefined", () => {
     const pubs = [pub("1", [{ name: "Smith J" }])];
     const candidates = buildCandidates(pubs, "Smith J");
-    expect(candidates[0]!.affiliation).toBe("Unknown affiliation");
+    expect(candidates[0]!.affiliation).toBeUndefined();
   });
 
   it("sorts candidates by paperCount descending", () => {
@@ -35,5 +34,22 @@ describe("buildCandidates", () => {
     ];
     const candidates = buildCandidates(pubs, "Smith J");
     expect(candidates[0]!.affiliation).toBe("Stanford");
+  });
+});
+
+describe("matchesQuery", () => {
+  it("returns false for any name when query is only whitespace (empty surname guard)", () => {
+    expect(matchesQuery("Smith J", "   ")).toBe(false);
+    expect(matchesQuery("Doe A", "   ")).toBe(false);
+    expect(matchesQuery("", "   ")).toBe(false);
+  });
+
+  it("returns true when surname appears in name", () => {
+    expect(matchesQuery("Smith J", "Smith J")).toBe(true);
+    expect(matchesQuery("Smith AB", "Smith")).toBe(true);
+  });
+
+  it("returns false when surname does not appear in name", () => {
+    expect(matchesQuery("Doe A", "Smith J")).toBe(false);
   });
 });

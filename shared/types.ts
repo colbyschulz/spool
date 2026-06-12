@@ -18,37 +18,48 @@ export interface Publication {
 /** A disambiguation candidate: one likely person behind a name query. */
 export interface AuthorCandidate {
   name: string;
-  affiliation: string;
+  /** Undefined when the records list no affiliation for this person. */
+  affiliation?: string;
   paperCount: number;
-  samplePublications: Publication[];
 }
 
-/** A node in the collaboration graph. `id` is the stable author identity key. */
-export interface GraphNode {
-  id: string;
-  author: Author;
-  /** Id of the node through which this node was added; null for the seed. */
-  parentId?: string | null;
+/** Response envelope for GET /api/authors/search. */
+export interface SearchAuthorsResponse {
+  candidates: AuthorCandidate[];
 }
 
-export interface GraphLink {
-  source: string;
-  target: string;
-  /** PMID of the paper that established this co-authorship edge. */
-  viaPmid: string;
-  /** Publication title, used as edge label. */
-  viaTitle?: string;
+/** Response envelope for GET /api/authors/publications. */
+export interface AuthorPublicationsResponse {
+  publications: Publication[];
 }
 
-export interface GraphState {
-  nodes: GraphNode[];
-  links: GraphLink[];
-  seedId: string;
+/** Response envelope for GET /api/publications/:pmid. */
+export interface GetPublicationResponse {
+  publication: Publication;
+}
+
+/** Error body returned by every non-2xx API response. */
+export interface ApiError {
+  error: string;
+  message?: string;
+}
+
+/**
+ * First whitespace token of a PubMed-style name ("Smith J" -> "Smith").
+ * Assumes PubMed short form, not inverted "Smith, J" (the comma would be kept).
+ */
+export function surnameOf(name: string): string {
+  return name.trim().split(/\s+/)[0] ?? "";
+}
+
+/** Canonical affiliation form for identity/equality: lowercased, trimmed, whitespace-collapsed. */
+export function normalizeAffiliation(affiliation: string | undefined): string {
+  return (affiliation ?? "").trim().toLowerCase().replace(/\s+/g, " ");
 }
 
 /** Stable identity key for an author node: normalized name + affiliation. */
 export function authorId(author: Author): string {
   const name = author.name.trim().toLowerCase().replace(/\s+/g, " ");
-  const aff = (author.affiliation ?? "").trim().toLowerCase();
+  const aff = normalizeAffiliation(author.affiliation);
   return aff ? `${name}|${aff}` : name;
 }

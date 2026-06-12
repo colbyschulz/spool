@@ -153,3 +153,18 @@
   align-items: center;
   gap: 5px;
 }
+
+.loadMore {
+  margin-top: $space-3;
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  background: $color-surface;
+  font-family: $font-body;
+  font-size: $text-sm;
+  color: $color-text-2;
+  cursor: pointer;
+
+  &:hover { background: $color-accent-subtle; color: $color-text; }
+}

@@ -5,6 +5,6 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "npx tsx apps/server/src/index.ts"
+    "healthcheckPath": "/api/health"
   }
 }
