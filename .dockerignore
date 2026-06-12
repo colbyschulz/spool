@@ -3,3 +3,7 @@ apps/*/node_modules
 apps/*/dist
 apps/web/src/assets/*.png
 .git
+
+# Local secrets must never reach an image layer
+.env
+.env.*

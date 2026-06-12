@@ -8,12 +8,17 @@ import styles from "./pubs-panel.module.scss";
 
 interface Props {
   author: Author;
+  /** All of the frontier's publications, newest-first. */
   publications: Publication[];
   loading: boolean;
   error: boolean;
-  selectedPmid: string | null;
+  /** Paper whose row is highlighted (mirrors the graph cluster highlight). */
+  highlightedPmid: string | null;
   depth: number;
-  onSelectPub: (pmid: string) => void;
+  /** How many papers are rendered as rows (matches the graph's clusters). */
+  shownCount: number;
+  onHighlightPaper: (pmid: string | null) => void;
+  onLoadMore: () => void;
 }
 
 export function PubsPanel({
@@ -21,14 +26,14 @@ export function PubsPanel({
   publications,
   loading,
   error,
-  selectedPmid,
+  highlightedPmid,
   depth,
-  onSelectPub,
+  shownCount,
+  onHighlightPaper,
+  onLoadMore,
 }: Props) {
-  const papers = useMemo(
-    () => [...publications].sort((a, b) => (b.year ?? 0) - (a.year ?? 0)),
-    [publications],
-  );
+  const shown = publications.slice(0, shownCount);
+  const hasMore = publications.length > shownCount;
 
   const stats = useMemo(() => {
     const coauthors = new Set<string>();
@@ -76,23 +81,28 @@ export function PubsPanel({
       </div>
 
       <div className={styles.list}>
-        <SectionLabel>Publications · {papers.length}</SectionLabel>
-        <p className={styles.hint}>Open a paper to reveal its co-authors in the graph.</p>
+        <SectionLabel>Publications · {publications.length}</SectionLabel>
+        <p className={styles.hint}>Click a paper to focus its co-author cluster.</p>
 
         {loading && <p className={styles.status}>Loading publications…</p>}
         {error && <p className={styles.statusError}>Couldn’t load publications — try again.</p>}
-        {!loading && !error && papers.length === 0 && (
+        {!loading && !error && publications.length === 0 && (
           <p className={styles.status}>No publications found.</p>
         )}
 
-        {papers.map((p) => (
+        {shown.map((p) => (
           <PubMedCard
             key={p.pmid}
             paper={p}
-            selected={p.pmid === selectedPmid}
-            onClick={() => onSelectPub(p.pmid)}
+            selected={p.pmid === highlightedPmid}
+            onClick={() => onHighlightPaper(p.pmid === highlightedPmid ? null : p.pmid)}
           />
         ))}
+        {hasMore && (
+          <button className={styles.loadMore} onClick={onLoadMore}>
+            Load more papers
+          </button>
+        )}
       </div>
     </Aside>
   );

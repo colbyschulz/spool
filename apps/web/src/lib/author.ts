@@ -1,4 +1,5 @@
 import type { Author } from "@spool/shared";
+import { surnameOf } from "@spool/shared";
 
 /**
  * Derive up-to-two-letter initials from a PubMed-style name.
@@ -15,7 +16,7 @@ export function initials(name: string): string {
 
 /** Last name (first whitespace token) for compact node labels. */
 export function lastName(name: string): string {
-  return name.trim().split(/\s+/)[0] ?? name;
+  return surnameOf(name) || name;
 }
 
 /** Comma-joined author line, truncated to a sensible count. */

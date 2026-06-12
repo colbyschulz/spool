@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Search, Spline } from "lucide-react";
 import type { AuthorCandidate } from "@spool/shared";
 import { useAuthorSearch } from "../api/hooks.js";
@@ -6,6 +6,8 @@ import { useDebouncedValue } from "../lib/use-debounced-value.js";
 import { Avatar } from "./avatar.js";
 import { Logo } from "./logo.js";
 import styles from "./top-bar.module.scss";
+
+const BLUR_CLOSE_MS = 150;
 
 interface Props {
   onHome: () => void;
@@ -18,6 +20,9 @@ export function TopBar({ onHome, onJump, pathLen }: Props) {
   const [open, setOpen] = useState(false);
   const debounced = useDebouncedValue(q.trim(), 300);
   const search = useAuthorSearch(debounced);
+  const blurTimer = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(blurTimer.current), []);
 
   const results = useMemo(
     () => [...(search.data ?? [])].sort((a, b) => b.paperCount - a.paperCount).slice(0, 5),
@@ -49,7 +54,10 @@ export function TopBar({ onHome, onJump, pathLen }: Props) {
               setOpen(true);
             }}
             onFocus={() => setOpen(true)}
-            onBlur={() => setTimeout(() => setOpen(false), 150)}
+            onBlur={() => {
+              window.clearTimeout(blurTimer.current);
+              blurTimer.current = window.setTimeout(() => setOpen(false), BLUR_CLOSE_MS);
+            }}
           />
         </div>
         {open && results.length > 0 && (
@@ -63,7 +71,7 @@ export function TopBar({ onHome, onJump, pathLen }: Props) {
                 <Avatar name={c.name} size={26} />
                 <span className={styles.resultBody}>
                   <span className={styles.resultName}>{c.name}</span>
-                  <span className={styles.resultAff}>{c.affiliation}</span>
+                  <span className={styles.resultAff}>{c.affiliation ?? "Unknown affiliation"}</span>
                 </span>
               </button>
             ))}

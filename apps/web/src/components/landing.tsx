@@ -86,7 +86,7 @@ export function Landing({ onPick }: Props) {
                   <Avatar name={c.name} size={36} />
                   <span className={styles.resultBody}>
                     <span className={styles.resultName}>{c.name}</span>
-                    <span className={styles.resultAff}>{c.affiliation}</span>
+                    <span className={styles.resultAff}>{c.affiliation ?? "Unknown affiliation"}</span>
                   </span>
                   <span className={styles.resultCount}>{c.paperCount} papers</span>
                 </button>

@@ -18,38 +18,40 @@ export interface ViaPaper {
   year?: number;
 }
 
-type Mode = "pubs" | "coauthors";
+const PAGE = 10;
+
+const VIEW_RESET = { shownPaperCount: PAGE, highlightedPmid: null } as const;
+
+function viaFields(via?: ViaPaper | null) {
+  return {
+    viaPmid: via?.pmid ?? null,
+    viaTitle: via?.title ?? null,
+    viaJournal: via?.journal ?? null,
+    viaYear: via?.year ?? null,
+  };
+}
 
 interface State {
   path: PathStep[];
-  mode: Mode;
-  selectedPmid: string | null;
+  shownPaperCount: number;
+  highlightedPmid: string | null;
 }
 
-const INITIAL: State = { path: [], mode: "pubs", selectedPmid: null };
+const INITIAL: State = { path: [], shownPaperCount: PAGE, highlightedPmid: null };
 
 /**
  * The guided-path exploration model: a single thread of authors.
- *   search → pubs → open paper → coauthors → pick one → pubs → …
- * Picking a co-author already on the path rewinds to that point.
+ *   search → frontier blooms all co-authors clustered by paper → pick one → repeat
+ * Picking an author already on the path rewinds to that point.
  */
 export function useExplorer() {
-  const [{ path, mode, selectedPmid }, setState] = useState<State>(INITIAL);
+  const [{ path, shownPaperCount, highlightedPmid }, setState] = useState<State>(INITIAL);
 
   const startExplore = useCallback((author: Author) => {
     setState({
-      path: [{ author, viaPmid: null, viaTitle: null, viaJournal: null, viaYear: null }],
-      mode: "pubs",
-      selectedPmid: null,
+      path: [{ author, ...viaFields(null) }],
+      ...VIEW_RESET,
     });
-  }, []);
-
-  const selectPub = useCallback((pmid: string) => {
-    setState((s) => ({ ...s, selectedPmid: pmid, mode: "coauthors" }));
-  }, []);
-
-  const backToPubs = useCallback(() => {
-    setState((s) => ({ ...s, selectedPmid: null, mode: "pubs" }));
   }, []);
 
   const selectCoauthor = useCallback((author: Author, via: ViaPaper | null) => {
@@ -59,26 +61,26 @@ export function useExplorer() {
       const path =
         existing >= 0
           ? s.path.slice(0, existing + 1) // rewind to an author already on the path
-          : [
-              ...s.path,
-              {
-                author,
-                viaPmid: via?.pmid ?? null,
-                viaTitle: via?.title ?? null,
-                viaJournal: via?.journal ?? null,
-                viaYear: via?.year ?? null,
-              },
-            ];
-      return { path, mode: "pubs", selectedPmid: null };
+          : [...s.path, { author, ...viaFields(via) }];
+      return { path, ...VIEW_RESET };
     });
   }, []);
 
   const rewindTo = useCallback((index: number) => {
-    setState((s) => ({ path: s.path.slice(0, index + 1), mode: "pubs", selectedPmid: null }));
+    setState((s) => ({
+      path: s.path.slice(0, Math.max(0, index) + 1),
+      ...VIEW_RESET,
+    }));
   }, []);
 
-  const clearPath = useCallback(() => {
-    setState((s) => ({ path: s.path.slice(0, 1), mode: "pubs", selectedPmid: null }));
+  const clearPath = useCallback(() => rewindTo(0), [rewindTo]);
+
+  const loadMorePapers = useCallback(() => {
+    setState((s) => ({ ...s, shownPaperCount: s.shownPaperCount + PAGE }));
+  }, []);
+
+  const highlightPaper = useCallback((pmid: string | null) => {
+    setState((s) => ({ ...s, highlightedPmid: pmid }));
   }, []);
 
   const reset = useCallback(() => setState(INITIAL), []);
@@ -88,16 +90,16 @@ export function useExplorer() {
 
   return {
     path,
-    mode,
-    selectedPmid,
+    shownPaperCount,
+    highlightedPmid,
     frontier,
     pathIds,
     startExplore,
-    selectPub,
-    backToPubs,
     selectCoauthor,
     rewindTo,
     clearPath,
+    loadMorePapers,
+    highlightPaper,
     reset,
   };
 }
